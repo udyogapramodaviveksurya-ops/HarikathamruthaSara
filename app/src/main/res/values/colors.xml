@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cream">#FFFFF8EE</color>
+    <color name="night">#FF1C1410</color>
+    <color name="saffron">#FFC2560F</color>
+    <color name="white">#FFFFFFFF</color>
+    <!-- brand, taken from the logo -->
+    <color name="brand_navy">#FF162856</color>
+    <color name="brand_gold">#FFE8B33A</color>
+</resources>

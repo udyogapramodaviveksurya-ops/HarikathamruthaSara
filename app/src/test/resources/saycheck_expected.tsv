@@ -1,0 +1,94 @@
+dtw	ಕ	ಕ	0.162712
+dtw	ಕ	ಕಾ	0.508507
+dtw	ಳ	ಲ	0.743837
+dtw	ಮಳೆ	ಮಳೆ	0.068594
+dtw	ನೀರು	ಹಾಲು	0.497680
+dtw	ಅ	ಔ	1.012530
+letter	ರ	ರ	GENTLE	wrong	ತ	
+letter	ರ	ರ	NORMAL	wrong	ತ	
+letter	ರ	ರ	STRICT	wrong	ತ	
+letter	ಙ	ಙ	GENTLE	ok		
+letter	ಙ	ಙ	NORMAL	ok		
+letter	ಙ	ಙ	STRICT	ok		
+letter	ಜ್ಞ	ಜ್ಞ	GENTLE	wrong	ಎ	
+letter	ಜ್ಞ	ಜ್ಞ	NORMAL	wrong	ಎ	
+letter	ಜ್ಞ	ಜ್ಞ	STRICT	wrong	ಎ	
+letter	ಋ	ಋ	GENTLE	ok		
+letter	ಋ	ಋ	NORMAL	ok		
+letter	ಋ	ಋ	STRICT	ok		
+letter	ಐ	ಐ	GENTLE	ok		
+letter	ಐ	ಐ	NORMAL	ok		
+letter	ಐ	ಐ	STRICT	ok		
+letter	ಔ	ಔ	GENTLE	ok		
+letter	ಔ	ಔ	NORMAL	ok		
+letter	ಔ	ಔ	STRICT	ok		
+letter	ಸ	ಸ	GENTLE	ok		
+letter	ಸ	ಸ	NORMAL	ok		
+letter	ಸ	ಸ	STRICT	ok		
+letter	ಬ	ಬ	GENTLE	wrong	ಪ	
+letter	ಬ	ಬ	NORMAL	wrong	ಪ	
+letter	ಬ	ಬ	STRICT	wrong	ಪ	
+letter	ಈ	ಈ	GENTLE	ok		
+letter	ಈ	ಈ	NORMAL	ok		
+letter	ಈ	ಈ	STRICT	ok		
+letter	ಶ್ರೀ	ಶ್ರೀ	GENTLE	ok		
+letter	ಶ್ರೀ	ಶ್ರೀ	NORMAL	ok		
+letter	ಶ್ರೀ	ಶ್ರೀ	STRICT	ok		
+letter	ದ	ದ	GENTLE	ok		
+letter	ದ	ದ	NORMAL	ok		
+letter	ದ	ದ	STRICT	ok		
+letter	ಅಂ	ಅಂ	GENTLE	ok		
+letter	ಅಂ	ಅಂ	NORMAL	ok		
+letter	ಅಂ	ಅಂ	STRICT	ok		
+letter	ಉ	ಊ	GENTLE	wrong	ಗಿ	
+letter	ಉ	ಊ	NORMAL	wrong	ಗಿ	
+letter	ಉ	ಊ	STRICT	wrong	ಗಿ	
+letter	ಓ	ಒ	GENTLE	wrong	ಉ	
+letter	ಓ	ಒ	NORMAL	wrong	ಉ	
+letter	ಓ	ಒ	STRICT	wrong	ಉ	
+letter	ಮೆ	ಮೇ	GENTLE	ok		
+letter	ಮೆ	ಮೇ	NORMAL	ok		
+letter	ಮೆ	ಮೇ	STRICT	ok		
+letter	ದು	ಧು	GENTLE	wrong	ಋ	
+letter	ದು	ಧು	NORMAL	wrong	ಋ	
+letter	ದು	ಧು	STRICT	wrong	ಋ	
+letter	ಏ	ಎ	GENTLE	wrong	ಎ	
+letter	ಏ	ಎ	NORMAL	wrong	ಎ	
+letter	ಏ	ಎ	STRICT	wrong	ಎ	
+letter	ತ	ಥ	GENTLE	ok		
+letter	ತ	ಥ	NORMAL	ok		
+letter	ತ	ಥ	STRICT	ok		
+letter	ಪ	ಫ	GENTLE	ok		
+letter	ಪ	ಫ	NORMAL	ok		
+letter	ಪ	ಫ	STRICT	ok		
+letter	ಡ	ಢ	GENTLE	wrong	ತ	
+letter	ಡ	ಢ	NORMAL	wrong	ತ	
+letter	ಡ	ಢ	STRICT	wrong	ತ	
+letter	ಈ	ಇ	GENTLE	wrong	ಎ	
+letter	ಈ	ಇ	NORMAL	wrong	ಎ	
+letter	ಈ	ಇ	STRICT	wrong	ಎ	
+letter	ಗಿ	ಘಿ	GENTLE	ok		
+letter	ಗಿ	ಘಿ	NORMAL	ok		
+letter	ಗಿ	ಘಿ	STRICT	mistake	ಘಿ	CONS
+letter	ಫ	ಪ	GENTLE	ok		
+letter	ಫ	ಪ	NORMAL	ok		
+letter	ಫ	ಪ	STRICT	mistake	ಪ	CONS
+letter	ಎ	ಏ	GENTLE	wrong	ಈ	
+letter	ಎ	ಏ	NORMAL	wrong	ಈ	
+letter	ಎ	ಏ	STRICT	wrong	ಈ	
+word	ದೇವರು	ದೇವರು	ok	
+word	ದೇವರು	ಬಾಯಿ	wrong	ಬಾಯಿ
+word	ಜ್ಞಾನ	ಜ್ಞಾನ	ok	
+word	ಜ್ಞಾನ	ಮನೆ	wrong	ಮನೆ
+word	ಘಂಟೆ	ಘಂಟೆ	ok	
+word	ಘಂಟೆ	ಗಂಗೆ	wrong	ಗಂಗೆ
+word	ನೀರು	ನೀರು	wrong	ಮೀನು
+word	ನೀರು	ಹೂವು	wrong	ಹೂವು
+word	ತುಳಸಿ	ತುಳಸಿ	ok	
+word	ತುಳಸಿ	ಆನೆ	wrong	ಆನೆ
+word	ಭಕ್ತಿ	ಭಕ್ತಿ	ok	
+word	ಭಕ್ತಿ	ಮಳೆ	wrong	ಮಳೆ
+word	ಕೋಳಿ	ಕೋಳಿ	ok	
+word	ಕೋಳಿ	ಹೂವು	wrong	ಹೂವು
+word	ವಿಠಲ	ವಿಠಲ	ok	
+word	ವಿಠಲ	ದೀಪ	wrong	ದೀಪ

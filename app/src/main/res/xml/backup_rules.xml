@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 11 and older. Downloaded chant and the ear model are re-downloadable and far larger than Android's 25 MB
+     backup limit; if they were included, nothing (not even progress) would be backed up. -->
+<full-backup-content>
+    <exclude domain="file" path="vag/" />
+    <exclude domain="file" path="ear/" />
+    <exclude domain="file" path="text/" />
+</full-backup-content>

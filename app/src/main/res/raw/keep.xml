@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Looked up by name at run time (account/Account.kt), so the release shrinker can't see that it is used. -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/default_web_client_id" />

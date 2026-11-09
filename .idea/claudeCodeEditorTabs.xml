@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ClaudeCodeEditorTabs">
+    <option name="activeSessionId" value="0774a4cd-7389-442b-9e60-d590b309caa9" />
+    <option name="openSessionIds">
+      <list>
+        <option value="cc3d095a-d541-41f8-b609-93fbcd9bc889" />
+        <option value="2b99912b-5276-49ac-95db-a1ca01bfa800" />
+        <option value="dd132de7-eddb-4f3b-b3dc-c5beacec9dd1" />
+        <option value="a7c339cf-3f6f-4a18-8d65-24bf9b6a4dbe" />
+        <option value="810f6f7c-6f86-470a-8d92-b804dafea516" />
+        <option value="0774a4cd-7389-442b-9e60-d590b309caa9" />
+      </list>
+    </option>
+    <option name="sessionPaths">
+      <map>
+        <entry key="0774a4cd-7389-442b-9e60-d590b309caa9" value="/sessions/b76276d4-1683-441d-b168-5afe01baaa80" />
+        <entry key="2b99912b-5276-49ac-95db-a1ca01bfa800" value="/sessions/c1025aac-3fa1-4a27-acb5-2fb408c526ae" />
+        <entry key="810f6f7c-6f86-470a-8d92-b804dafea516" value="/sessions/c1a4d845-1323-49aa-91ce-9bfad1fc4528" />
+        <entry key="a7c339cf-3f6f-4a18-8d65-24bf9b6a4dbe" value="/sessions/56d9f567-6e2f-49df-831a-03bce003a8fe" />
+        <entry key="dd132de7-eddb-4f3b-b3dc-c5beacec9dd1" value="/sessions/f0e58d23-a73c-4e4b-90c9-28d7796386d6" />
+      </map>
+    </option>
+    <option name="sessionTitles">
+      <map>
+        <entry key="0774a4cd-7389-442b-9e60-d590b309caa9" value="Rebuild app with com.prathosh.hks" />
+        <entry key="2b99912b-5276-49ac-95db-a1ca01bfa800" value="Vagdhenu as sole HKS source" />
+        <entry key="810f6f7c-6f86-470a-8d92-b804dafea516" value="Release readiness for SayItTab.kt" />
+        <entry key="a7c339cf-3f6f-4a18-8d65-24bf9b6a4dbe" value="Colorful playful Android UI/UX app" />
+        <entry key="dd132de7-eddb-4f3b-b3dc-c5beacec9dd1" value="Recite and check errors" />
+      </map>
+    </option>
+  </component>
+</project>

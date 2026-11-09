@@ -1,0 +1,5 @@
+<resources>
+    <style name="Theme.HarikathamruthaSara" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/night</item>
+    </style>
+</resources>

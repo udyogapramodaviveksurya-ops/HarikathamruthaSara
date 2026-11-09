@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+<key>CFBundleDevelopmentRegion</key><string>en</string>
+<key>CFBundleDisplayName</key><string>HarikathamruthaSaaraa Abhyaasaa</string>
+<key>CFBundleExecutable</key><string>$(EXECUTABLE_NAME)</string>
+<key>CFBundleIdentifier</key><string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+<key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+<key>CFBundleName</key><string>$(PRODUCT_NAME)</string>
+<key>CFBundlePackageType</key><string>APPL</string>
+<key>CFBundleShortVersionString</key><string>$(MARKETING_VERSION)</string>
+<key>CFBundleVersion</key><string>$(CURRENT_PROJECT_VERSION)</string>
+<key>CFBundleLocalizations</key><array><string>en</string><string>ta</string><string>kn</string><string>hi</string><string>te</string><string>sa</string></array>
+<key>CFBundleURLTypes</key><array>
+ <dict><key>CFBundleTypeRole</key><string>Editor</string><key>CFBundleURLSchemes</key><array><string>com.googleusercontent.apps.818646535112-pl09ep4tmjahuvpd5rt1c95jrv9jffk0</string></array></dict>
+ <dict><key>CFBundleTypeRole</key><string>Editor</string><key>CFBundleURLSchemes</key><array><string>app-1-818646535112-ios-faef00cd201c92f21e4efd</string></array></dict>
+</array>
+<key>GIDClientID</key><string>818646535112-pl09ep4tmjahuvpd5rt1c95jrv9jffk0.apps.googleusercontent.com</string>
+<key>ITSAppUsesNonExemptEncryption</key><false/>
+<key>LSApplicationCategoryType</key><string>public.app-category.education</string>
+<key>LSRequiresIPhoneOS</key><true/>
+<key>NSMicrophoneUsageDescription</key><string>The microphone is used only when you start Recite and check or Say it. Your voice is checked on this device and is never uploaded.</string>
+<key>NSAppTransportSecurity</key><dict><key>NSAllowsLocalNetworking</key><true/></dict>
+<key>BGTaskSchedulerPermittedIdentifiers</key><array><string>com.prathosh.hks.refresh</string></array>
+<key>FirebaseAppDelegateProxyEnabled</key><true/>
+<key>UIBackgroundModes</key><array><string>fetch</string><string>remote-notification</string></array>
+<key>UIApplicationSceneManifest</key><dict><key>UIApplicationSupportsMultipleScenes</key><false/></dict>
+<key>UILaunchScreen</key><dict><key>UIColorName</key><string>LaunchBackground</string><key>UIImageName</key><string>LaunchLogo</string><key>UIImageRespectsSafeAreaInsets</key><true/></dict>
+<key>UISupportedInterfaceOrientations</key><array><string>UIInterfaceOrientationPortrait</string><string>UIInterfaceOrientationLandscapeLeft</string><string>UIInterfaceOrientationLandscapeRight</string></array>
+<key>UISupportedInterfaceOrientations~ipad</key><array><string>UIInterfaceOrientationPortrait</string><string>UIInterfaceOrientationPortraitUpsideDown</string><string>UIInterfaceOrientationLandscapeLeft</string><string>UIInterfaceOrientationLandscapeRight</string></array>
+</dict></plist>

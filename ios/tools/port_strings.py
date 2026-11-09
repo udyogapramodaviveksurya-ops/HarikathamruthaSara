@@ -1,0 +1,193 @@
+#!/usr/bin/env python3
+"""Generates HKS/Generated/*.swift from the Android string tables, so the six languages are never retyped.
+Re-run after editing app/.../i18n/*.kt:  python3 ios/tools/port_strings.py"""
+import re, pathlib
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+SRC = ROOT / "app/src/main/java/com/example/harikathamruthasara/i18n"
+OUT = ROOT / "ios/HKS/Generated"
+RES = {"in","is","as","repeat","default","continue","case","switch","where","operator","func","var","let","class","struct","enum","self","true","false","nil","do","for","while","if","else","return","break","try","catch","throw","guard","defer","import","init","internal","public","private","static"}
+
+def segs(s):
+    """Yield (is_string, text) with whole string literals (incl. nested ${"..."}) as single segments."""
+    i, n, start = 0, len(s), 0
+    while i < n:
+        if s[i] == '"':
+            if i > start: yield (False, s[start:i])
+            j = i + 1; depth = 0
+            while True:
+                c = s[j]
+                if c == '\\': j += 2; continue
+                if c == '$' and s[j+1] == '{': depth += 1; j += 2; continue
+                if depth:
+                    if c == '{': depth += 1
+                    elif c == '}': depth -= 1
+                    elif c == '"':                     # nested string inside ${}
+                        j += 1
+                        while s[j] != '"': j += 1
+                    j += 1; continue
+                if c == '"': break
+                j += 1
+            yield (True, s[i:j+1]); i = j + 1; start = i
+        else: i += 1
+    if start < n: yield (False, s[start:])
+
+def ifexpr(e):
+    m = re.fullmatch(r'\s*if \((.+?)\) (.+?) else (.+?)\s*', e, re.S)
+    return f"(({m[1]}) ? {m[2]} : {m[3]})" if m else e
+
+def lit(s):
+    b = s[1:-1]; out = ''; i = 0
+    while i < len(b):
+        c = b[i]
+        if c == '\\':
+            if b[i+1] == 'u': out += '\\u{' + b[i+2:i+6] + '}'; i += 6; continue
+            if b[i+1] == '$': out += '$'; i += 2; continue
+            out += b[i:i+2]; i += 2; continue
+        if c == '$' and i+1 < len(b) and b[i+1] == '{':
+            j = i + 2; d = 1
+            while d:
+                if b[j] == '{': d += 1
+                elif b[j] == '}': d -= 1
+                j += 1
+            out += '\\(' + ifexpr(b[i+2:j-1]) + ')'; i = j; continue
+        m = re.match(r'\$([A-Za-z_]\w*)', b[i:])
+        if m: out += '\\(' + m[1] + ')'; i += len(m[0]); continue
+        out += c; i += 1
+    return '"' + out + '"'
+
+def conv(e):
+    out = []
+    for is_s, t in segs(e):
+        if is_s: out.append(lit(t))
+        else:
+            t = re.sub(r'\bmaxOf\(', 'max(', t)
+            t = t.replace('.isNotEmpty()', '.isEmpty == false')
+            out.append(t)
+    r = ''.join(out)
+    # "..." + if (c) "a" else "b"
+    r = re.sub(r'\+ if \((\w+)\) ("(?:[^"\\]|\\.)*") else ("(?:[^"\\]|\\.)*")', r'+ (\1 ? \2 : \3)', r)
+    return r
+
+def decls(body):
+    """Split a class body into top-level declarations."""
+    idx = [m.start() for m in re.finditer(r'^    (?:private )?(?:val|fun) ', body, re.M)]
+    for a, b in zip(idx, idx[1:] + [len(body)]):
+        chunk = body[a:b]
+        yield re.sub(r'\n\s*//[^\n]*', '', chunk).strip()
+
+def split_cases(block):
+    """'a -> x\\n b -> y' at depth 0, string aware."""
+    masked = ''.join(t if not s else ' ' * len(t) for s, t in segs(block))
+    cases, depth, last = [], 0, 0
+    for i, c in enumerate(masked):
+        if c in '([{': depth += 1
+        elif c in ')]}': depth -= 1
+        elif c == '\n' and depth == 0:
+            if block[last:i].strip(): cases.append(block[last:i].strip())
+            last = i + 1
+    if block[last:].strip(): cases.append(block[last:].strip())
+    return cases
+
+def params(p):
+    if not p.strip(): return ''
+    res = []
+    for x in p.split(','):
+        n, t = [y.strip() for y in x.split(':')]
+        t = {'Int':'Int','String':'String','Boolean':'Bool','List<Int>':'[Int]','Long':'Int'}.get(t, t)
+        res.append(f'_ {n}: {t}')
+    return ', '.join(res)
+
+def body_of(expr):
+    expr = expr.strip()
+    if expr.startswith('when {'):
+        inner = expr[expr.index('{')+1:expr.rindex('}')]
+        lines = []
+        for c in split_cases(inner):
+            cond, val = c.split(' -> ', 1)
+            lines.append(f'        return {conv(val)}' if cond.strip() == 'else' else f'        if {conv(cond)} {{ return {conv(val)} }}')
+        return '\n'.join(lines)
+    m = re.match(r'if \((\w+(?: > 0)?)\)\s+t\(', expr)
+    if m:
+        masked = ''.join(t if not s else ' ' * len(t) for s, t in segs(expr))
+        k = masked.index('\n', 0) if False else masked.rindex(' else ')
+        return f'        if {m[1]} {{ return {conv(expr[m.end()-2:k])} }}\n        return {conv(expr[k+6:])}'
+    return '        ' + conv(expr)
+
+def gen(fname, cls, skip=()):
+    txt = (SRC / fname).read_text()
+    i = txt.index(f'class {cls}(')
+    body = txt[txt.index('{', i)+1 : txt.rindex('}')]
+    out = [f'// GENERATED by ios/tools/port_strings.py from {fname}: do not edit.\n', f'final class {cls}: @unchecked Sendable {{',
+           '    let lang: Lang\n    init(_ lang: Lang) { self.lang = lang }',
+           '    private func t(_ en: String, _ ta: String, _ kn: String, _ hi: String, _ te: String, _ sa: String) -> String { i18nPick(lang, en, ta, kn, hi, te, sa) }']
+    if cls == 'Strs':
+        out.append('    private func tb(_ en: String, _ ta: String, _ kn: String, _ hi: String, _ te: String, _ sa: String) -> String { i18nBoth(lang, en, t(en, ta, kn, hi, te, sa)) }')
+    for d in decls(body):
+        m = re.match(r'(private )?(val|fun) (\w+)', d)
+        name = m[3]
+        if name in ('t','tb') or name in skip: continue
+        safe = f'`{name}`' if name in RES else name
+        if m[2] == 'fun':
+            fm = re.match(r'(?:private )?fun \w+\(([^)]*)\)\s*(?::\s*\w+\s*)?=\s*', d, re.S)
+            if not fm: raise SystemExit('cannot parse '+d[:80])
+            out.append(f'    func {safe}({params(fm[1])}) -> String {{\n{body_of(d[fm.end():])}\n    }}')
+        else:
+            vm = re.match(r'(?:private )?val \w+\s*(?::[^=]+)?=\s*', d, re.S)
+            out.append(f'    var {safe}: String {{\n        {conv(d[vm.end():])}\n    }}')
+    out.append('}')
+    return out, body, txt
+
+def special(body):
+    """Hand-shaped translations of the three Kotlin structures that are not plain t() calls."""
+    x = []
+    # levelNames
+    a = body.index('val levelNames'); b = body.index('private val badgeText')
+    cases = re.findall(r'Lang\.(\w+) -> listOf\((.*?)\)\n', body[a:b])
+    x.append('    var levelNames: [String] {\n        switch lang {')
+    for l, v in cases: x.append(f'        case .{l.lower()}: return [{v}]')
+    x.append('        }\n    }')
+    # badges
+    a = body.index('private val badgeText'); s = body.index('mapOf(', a) + 6; e = body.index('fun badgeTitle')
+    block = body[s:body.rindex(')', s, e)]
+    x.append('    private lazy var badgeText: [String: (String, String)] = {\n        var d: [String: (String, String)] = [:]')
+    for c in split_cases(block):
+        c = c.rstrip(',')
+        parts = list(segs(c)); k = parts[0][1]
+        rest = c[len(k):].strip()
+        assert rest.startswith('to (') and rest.endswith(')'), rest[:40]
+        inner = rest[4:-1]
+        masked = ''.join(t if not s_ else ' ' * len(t) for s_, t in segs(inner))
+        depth = 0; cut = None
+        for i, ch in enumerate(masked):
+            if ch == '(': depth += 1
+            elif ch == ')': depth -= 1
+            elif depth == 0 and masked[i:i+4] == ' to ': cut = i; break
+        x.append(f'        d[{k}] = ({conv(inner[:cut])}, {conv(inner[cut+4:])})')
+    x.append('        return d\n    }()')
+    # updatesBody
+    a = body.index('fun updatesBody'); e = body.index('val updateNow')
+    chunk = body[a:e]
+    calls = re.findall(r'if \(([^)]*(?:\(\))?)\) (t\(.*)', chunk)
+    assert len(calls) == 2, chunk
+    x.append('    func updatesBody(_ text: Bool, _ packs: [Int]) -> String {\n        var parts: [String] = []')
+    x.append(f'        if text {{ parts.append({conv(calls[0][1].rstrip().rstrip(",").replace(" else null",""))}) }}')
+    second = calls[1][1].rstrip().rstrip(",").replace(" else null","")
+    second = re.sub(r'packs\.joinToString\(", "\)', 'packs.map(String.init).joined(separator: ", ")', second)
+    x.append(f'        if !packs.isEmpty {{ parts.append({conv(second)}) }}')
+    x.append('        return parts.joined(separator: " · ")\n    }')
+    return x
+
+o, body, _ = gen('Strings.kt', 'Strs', skip=('levelNames','badgeText','updatesBody','strictName','strictSub','strings'))
+o[-1:] = special(body) + [
+ '    func badgeTitle2(_ id: String) -> String { badgeText[id]?.0 ?? id }',
+ '    func badgeHint2(_ id: String) -> String { badgeText[id]?.1 ?? "" }',
+ '    func strictName(_ s: Strictness) -> String { switch s { case .gentle: strictGentle; case .normal: strictNormal; case .strict: strictStrict } }',
+ '    func strictSub(_ s: Strictness) -> String { switch s { case .gentle: strictGentleSub; case .normal: strictNormalSub; case .strict: strictStrictSub } }', '}']
+text = '\n'.join(o)
+text = re.sub(r'    func badgeTitle\(_ id: String\) -> String \{.*?\n    \}\n', '', text, flags=re.S)
+text = re.sub(r'    func badgeHint\(_ id: String\) -> String \{.*?\n    \}\n', '', text, flags=re.S)
+text = text.replace('badgeTitle2', 'badgeTitle').replace('badgeHint2', 'badgeHint')
+(OUT/'Strs.swift').write_text(text + '\n')
+for f, c in (('AccountStrings.kt','AccountText'), ('TourStrings.kt','TourText')):
+    (OUT/f'{c}.swift').write_text('\n'.join(gen(f, c)[0]) + '\n')
+print('ok')

@@ -1,0 +1,12 @@
+<resources>
+    <style name="Theme.HarikathamruthaSara" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/cream</item>
+    </style>
+
+    <!-- Shown while the app starts: the logo on navy -->
+    <style name="Theme.HarikathamruthaSara.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/brand_navy</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.HarikathamruthaSara</item>
+    </style>
+</resources>

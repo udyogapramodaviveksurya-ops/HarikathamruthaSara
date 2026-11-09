@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/AppAuth-iOS" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/GTMAppAuth" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/GoogleAppMeasurement" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/GoogleDataTransport" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/GoogleSignIn-iOS" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/GoogleUtilities" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/abseil-cpp-binary" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/app-check" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/firebase-ios-sdk" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/google-ads-on-device-conversion-ios-sdk" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/grpc-binary" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/gtm-session-fetcher" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/interop-ios-for-google-sdks" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/leveldb" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/nanopb" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/onnxruntime-swift-package-manager" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/promises" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/build/spm/checkouts/swift-protobuf" vcs="Git" />
+  </component>
+</project>

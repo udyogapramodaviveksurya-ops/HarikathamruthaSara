@@ -1,0 +1,25 @@
+rules_version = '2';
+// Each reader's progress + settings live at users/{uid}; only that signed-in reader can read or write it.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid} {
+      allow read, delete: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.resource.size() < 900 * 1024;   // a document is at most 1 MB; progress is a few KB
+    }
+    // Problem reports: the app may only add one, of a fixed shape and size. Nobody can read them from the app;
+    // they are read in the Firebase console.
+    match /reports/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['sandhi', 'padya', 'line', 'kind', 'note', 'voice', 'app', 'at'])
+        && request.resource.data.keys().hasAll(['sandhi', 'padya', 'line', 'kind', 'note', 'voice', 'app', 'at'])
+        && request.resource.data.sandhi is int && request.resource.data.padya is int
+        && (request.resource.data.line == null || request.resource.data.line is int)
+        && request.resource.data.kind is string && request.resource.data.kind.size() <= 40
+        && request.resource.data.note is string && request.resource.data.note.size() <= 2000
+        && request.resource.data.voice is string && request.resource.data.voice.size() <= 10
+        && request.resource.data.app is string && request.resource.data.app.size() <= 20
+        && request.resource.data.at == request.time;
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}

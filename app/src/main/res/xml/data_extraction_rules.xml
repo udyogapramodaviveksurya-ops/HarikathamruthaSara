@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 12 and newer. See backup_rules.xml for why the downloads are left out of cloud backup. -->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="file" path="vag/" />
+        <exclude domain="file" path="ear/" />
+        <exclude domain="file" path="text/" />
+    </cloud-backup>
+</data-extraction-rules>
